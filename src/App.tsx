@@ -1,6 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useRef, useState} from 'react';
+import clsx from "clsx";
+import styles from './App.module.css';
+import {useAppDispatch, useAppSelector} from "./redux/hooks";
+import {fetchImagesAsync, getAlbums, getImages, imageState, removeImage} from "./redux/slices/gallerySlice";
+import {Checkbox, Pagination} from "@mui/material";
+import removeIcon from './assets/remove.png'
 
 function App() {
   return (
