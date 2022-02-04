@@ -109,6 +109,14 @@ function App() {
                     <div ref={modalRef} className={styles.modalContent}>
                         <img src={selectedImage?.url}/>
                         <div>{selectedImage?.title}</div>
+                        <img className={styles.removeImageIcon}
+                             src={removeIcon}
+                             alt="remove image icon"
+                             onClick={() => {
+                                 toggleModal(false)
+                                 dispatch(removeImage({id: selectedImage?.id || 0}))
+                             }}
+                        />
                     </div>
                 </div>
             )}
