@@ -34,7 +34,6 @@ export const GallerySlice = createSlice({
     initialState,
     reducers: {
         removeImage: (state, action: PayloadAction<{id: number}>) => {
-            // console.log('removeImage with id', action.payload.id)
             state.gallery = [...state.gallery.filter(item => item.id !== action.payload.id)]
         }
     },
