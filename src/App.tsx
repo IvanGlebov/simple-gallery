@@ -65,6 +65,56 @@ function App() {
     useEffect(() => {
         setPage(1)
     }, [album, ignoreAlbumFilter])
+
+    return (
+        <div className={styles.App}>
+            <div className={styles.filtersWrapper}>
+                <div className={styles.checkboxFilterWrapper}>
+                    <Checkbox checked={ignoreAlbumFilter} onClick={(e) => setIgnoreAlbumFilter(!ignoreAlbumFilter)}/>
+                    <div>Filter by album number</div>
+                </div>
+                <div className={clsx(styles.albumFilter, {[styles.hidden]: !ignoreAlbumFilter})}>
+                    <div>Select album number</div>
+                    <div>
+                        <Pagination page={album}
+                                    onChange={(event, value) => setAlbum(value)}
+                                    count={albums.length}/>
+                    </div>
+                </div>
+            </div>
+
+            <div ref={galleryRef} className={styles.imagesGrid}>
+                {loading && (<div className={styles.loaderWrapper}>
+                    <div className={styles.loader}></div>
+                </div>)}
+
+                {images.map((image, index) => {
+                    return (
+                        <div key={image.id} className={styles.imageCard}>
+                            <img onClick={() => openModal(image)} src={image.thumbnailUrl}/>
+                            <img className={styles.removeImageIcon}
+                                 src={removeIcon}
+                                 alt="remove image icon"
+                                 onClick={() => dispatch(removeImage({id: image.id}))}
+                            />
+                        </div>
+                    )
+                })}
+            </div>
+            <Pagination page={page}
+                        onChange={(e, value) => setPage(value)}
+                        count={Math.ceil(currentAlbumSize / pageSize)}/>
+            {modalStatus && (
+                <div className={styles.modalWrapper}>
+                    <div ref={modalRef} className={styles.modalContent}>
+                        <img src={selectedImage?.url}/>
+                        <div>{selectedImage?.title}</div>
+                    </div>
+                </div>
+            )}
+
+        </div>
+    );
 }
 
 export default App;
