@@ -7,24 +7,24 @@ import {Checkbox, Pagination} from "@mui/material";
 import removeIcon from './assets/remove.png'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const dispatch = useAppDispatch()
+
+    let galleryRef = useRef<HTMLDivElement>(null)
+    let modalRef = useRef<HTMLDivElement>(null)
+
+    let [page, setPage] = useState<number>(1)
+    let [pageSize, setPageSize] = useState<number>(35)
+    let [album, setAlbum] = useState<number>(1)
+    let [loading, setLoading] = useState<boolean>(false)
+    let [ignoreAlbumFilter, setIgnoreAlbumFilter] = useState<boolean>(false)
+    let [modalStatus, toggleModal] = useState<boolean>(false)
+    let [selectedImage, setSelectedImage] = useState<imageState>()
+
+    let albums = useAppSelector(getAlbums)
+    let allImages = useAppSelector(getImages)
+    let currentAlbumSize = !ignoreAlbumFilter ? allImages.length : allImages.filter((image) => image.albumId === album).length
+    let images = allImages.filter(item => !ignoreAlbumFilter || item.albumId  === album).filter((image, index) => ((page-1)*pageSize <= index && index < page*pageSize))
 }
 
 export default App;
